@@ -1,0 +1,30 @@
+# Environments
+.venv/
+venv/
+env/
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Study outputs (regenerate with scripts/run_study.py)
+results/
+
+# Local data files (field measurements stay out of version control)
+data/*.csv
+!data/.gitkeep
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Notebooks
+.ipynb_checkpoints/

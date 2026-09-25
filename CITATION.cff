@@ -1,0 +1,76 @@
+# This codebase implements the machine-learning pipeline of:
+#
+#   Alinasab, N., Mohammadzadeh, N., Karimi, A., Mohammadzadeh, R., & Gál, T. (2025).
+#   A measurement-based framework integrating machine learning and morphological
+#   dynamics for outdoor thermal regulation.
+#   International Journal of Biometeorology, 69(9), 1645-1662.
+#   https://doi.org/10.1007/s00484-025-02921-8
+#
+# Code author: Alireza Karimi (University of Stuttgart, IBBTE)
+
+cff-version: 1.2.0
+message: >-
+  If you use this software, please cite both the software (this repository)
+  and the original paper it implements.
+title: TabrizOTC-ML - Morphology-Driven Outdoor Thermal Comfort Classification
+authors:
+  - family-names: Karimi
+    given-names: Alireza
+    affiliation: Institute of Building Materials, Building Physics, Building Technology and Design (IBBTE), University of Stuttgart
+  - family-names: Alinasab
+    given-names: Niloufar
+    affiliation: Department of Atmospheric and Geospatial Data Sciences, University of Szeged
+  - family-names: Mohammadzadeh
+    given-names: Negar
+    affiliation: Department of Architecture, Tarbiat Modares University
+  - family-names: Mohammadzadeh
+    given-names: Rahmat
+    affiliation: Department of Architecture and Urban Design, University of Tabriz
+  - family-names: Gál
+    given-names: Tamás
+    affiliation: Department of Atmospheric and Geospatial Data Sciences, University of Szeged
+version: 1.0.0
+date-released: "2026-09-25"
+license: MIT
+repository-code: https://github.com/Alirezza18/tabriz-otc-ml
+abstract: >-
+  Reference implementation of the machine-learning pipeline from Alinasab et
+  al. (2025), Int. J. Biometeorology 69:1645-1662 (DOI
+  10.1007/s00484-025-02921-8). Six Bayesian-optimized classifiers (KNN,
+  Decision Tree, SVM, Random Forest, XGBoost, CatBoost) predict three outdoor
+  thermal comfort indices (UTCI, PET, PMV) from street morphology, followed by
+  SHAP interpretation. Ships a synthetic benchmark calibrated to the paper's
+  Table 1 feature ranges and Table 2 class fractions; the original field
+  measurements are available from the corresponding author on request.
+keywords:
+  - outdoor thermal comfort
+  - machine learning
+  - Bayesian optimization
+  - SHAP
+  - urban climate
+  - UTCI
+  - PET
+  - PMV
+  - urban morphology
+preferred-citation:
+  type: article
+  title: >-
+    A measurement-based framework integrating machine learning and
+    morphological dynamics for outdoor thermal regulation
+  authors:
+    - family-names: Alinasab
+      given-names: Niloufar
+    - family-names: Mohammadzadeh
+      given-names: Negar
+    - family-names: Karimi
+      given-names: Alireza
+    - family-names: Mohammadzadeh
+      given-names: Rahmat
+    - family-names: Gál
+      given-names: Tamás
+  journal: International Journal of Biometeorology
+  year: 2025
+  volume: 69
+  issue: 9
+  pages: "1645-1662"
+  doi: 10.1007/s00484-025-02921-8

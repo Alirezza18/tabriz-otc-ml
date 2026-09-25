@@ -1,0 +1,56 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tabriz-otc-ml"
+version = "1.0.0"
+description = "Reference implementation of the ML pipeline from Alinasab et al. (2025), Int J Biometeorol 69:1645-1662 - Bayesian-optimized classifiers predicting UTCI/PET/PMV from street morphology, with SHAP interpretation"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [
+    { name = "Alireza Karimi" },
+]
+keywords = [
+    "outdoor thermal comfort",
+    "machine learning",
+    "Bayesian optimization",
+    "SHAP",
+    "urban climate",
+    "UTCI",
+    "PET",
+    "PMV",
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Atmospheric Science",
+]
+dependencies = [
+    "numpy>=1.26",
+    "pandas>=2.0",
+    "scikit-learn>=1.3",
+    "optuna>=3.5",
+    "xgboost>=2.0",
+    "catboost>=1.2",
+    "shap>=0.45",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "ruff",
+]
+
+[project.urls]
+Paper = "https://doi.org/10.1007/s00484-025-02921-8"
+Repository = "https://github.com/Alirezza18/tabriz-otc-ml"
+
+[tool.setuptools]
+packages = ["otc_ml"]
