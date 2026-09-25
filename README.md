@@ -115,6 +115,28 @@ Outputs written under `results/`:
 | `shap_directions_<index>.csv` | binary high/low-value class-direction analysis (Fig. 4 equivalent) |
 | `summary.json` | best model per index + all metrics |
 
+### Run with Docker (no Python setup needed)
+
+The study runs headless in a container and writes its outputs to your host:
+
+```bash
+# Full study (60 BO trials x 6 algorithms x 3 indices) - results in ./results:
+docker run --rm -v "$PWD/results:/app/results" ghcr.io/alirezza18/tabriz-otc-ml:latest
+
+# Fast demo:
+docker run --rm -v "$PWD/results:/app/results" ghcr.io/alirezza18/tabriz-otc-ml:latest \
+    --n-trials 3 --out results/
+
+# With your own field-measurement CSV (drop it into ./data first):
+docker run --rm -v "$PWD/data:/app/data" -v "$PWD/results:/app/results" \
+    ghcr.io/alirezza18/tabriz-otc-ml:latest --csv data/my_measurements.csv --out results/
+```
+
+Or with compose: `docker compose up` (edit the `command:` line for demo/CSV modes).
+The image runs as an unprivileged user and is rebuilt + smoke-tested (a real
+mini-study inside the container) on every change; every `vX.Y.Z` release tag
+publishes a matching image version.
+
 ### Using your own dataset
 
 Bring a CSV with these columns (the synthetic benchmark generates exactly this layout):
@@ -244,6 +266,15 @@ Machine-readable metadata: [`CITATION.cff`](CITATION.cff).
 ## License
 
 MIT — see [LICENSE](LICENSE). The underlying paper is open access under CC-BY 4.0.
+
+## Authors & contributions
+
+- **Alireza Karimi** ([@Alirezza18](https://github.com/Alirezza18)) — *code author*; implemented
+  and maintains this reference implementation (IBBTE, University of Stuttgart).
+- **Niloufar Alinasab** ([@nfaralinasab-hub](https://github.com/nfaralinasab-hub)) — *field-study
+  lead and corresponding author* of the underlying paper (University of Szeged).
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) to get involved.
 
 ## Corresponding author contact
 

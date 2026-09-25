@@ -1,0 +1,15 @@
+services:
+  study:
+    build: .
+    image: tabriz-otc-ml:latest
+    container_name: tabriz-otc-ml
+    # Full study (60 BO trials x 6 algorithms x 3 indices) on the synthetic
+    # benchmark; results land in ./results on the host.
+    command: ["--out", "results/"]
+    volumes:
+      - ./results:/app/results
+      - ./data:/app/data
+    # For a quick demo instead:
+    #   command: ["--n-trials", "3", "--out", "results/"]
+    # For your own field data (drop the CSV into ./data first):
+    #   command: ["--csv", "data/my_measurements.csv", "--out", "results/"]

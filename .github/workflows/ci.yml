@@ -3,6 +3,7 @@ name: tests
 on:
   push:
     branches: [main]
+    tags: ['v*']
   pull_request:
     branches: [main]
   workflow_dispatch:
@@ -24,3 +25,70 @@ jobs:
 
       - name: Run test suite
         run: python -m unittest discover -s tests -v
+
+  docker:
+    name: docker build & smoke test
+    runs-on: ubuntu-latest
+    needs: tests
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Build image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          load: true
+          tags: tabriz-otc-ml:ci
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Smoke test — quick study run inside the container
+        run: |
+          mkdir -p smoke-results
+          docker run --rm -v "$PWD/smoke-results:/app/results" tabriz-otc-ml:ci \
+            --n-trials 2 --out results/ --no-shap
+          test -f smoke-results/results_UTCI.csv || { echo "::error::no UTCI results"; exit 1; }
+          test -f smoke-results/summary.json  || { echo "::error::no summary";    exit 1; }
+          echo "smoke outputs:"; ls smoke-results
+
+      - name: Smoke artifacts on failure
+        if: failure()
+        run: ls -la smoke-results/ 2>/dev/null || true
+
+  publish:
+    name: publish image to ghcr
+    runs-on: ubuntu-latest
+    needs: [tests, docker]
+    if: (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v')) && github.event_name == 'push'
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/setup-buildx-action@v3
+
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: docker/metadata-action@v5
+        id: meta
+        with:
+          images: ghcr.io/${{ github.repository_owner }}/tabriz-otc-ml
+          tags: |
+            latest
+            type=semver,pattern={{version}}
+
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
